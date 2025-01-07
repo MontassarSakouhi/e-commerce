@@ -32,7 +32,7 @@ const NavBar = () => {
                 <div className='group relative' >
                     <img src={assets.profile_icon} alt="" className='w-5 cursor-pointer' />
 
-                    <div className='group-hover:block hidden absolute dropdown-menu right-[-50px] pt-4' >
+                    <div className='group-hover:block hidden absolute dropdown-menu pos right-[-50px] pt-4 z-[999] ' >
                         <div className='flex flex-col gap-2 w-32 py-6 px-5 bg-slate-100 text-gray-700 rounded-lg'>
                             <p className='hover:text-black hover:underline cursor-pointer text-center' >My Profile</p>
                             <p className='hover:text-black hover:underline cursor-pointer text-center' >Orders</p>

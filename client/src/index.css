@@ -1,4 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=SUSE:wght@100..800&family=Sevillana&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=SUSE:wght@100..800&family=Sevillana&display=swap');
+/* @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Playfair+Display:ital,wght@0,400..900;1,400..900&family=Roboto+Condensed:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&family=SUSE:wght@100..800&family=Sevillana&display=swap'); */
+
 
 @tailwind base;
 @tailwind components;
@@ -9,16 +12,85 @@ a.active hr {
     display: block;
 }
 
+@keyframes dot-blink {
+    0% {
+        opacity: 0;
+    }
+
+    33% {
+        opacity: 1;
+    }
+
+    66% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 0;
+    }
+}
+
+.blinking-dots span:nth-child(1) {
+    animation: dot-blink 1s infinite 0s;
+}
+
+.blinking-dots span:nth-child(2) {
+    animation: dot-blink 1s infinite 0.2s;
+}
+
+.blinking-dots span:nth-child(3) {
+    animation: dot-blink 1s infinite 0.4s;
+}
+
 .playfair-display {
     font-family: "Playfair Display", serif;
     font-optical-sizing: auto;
     font-weight: 400;
     font-style: normal;
 }
-@media (max-width:640px) {
-    a.active{
-        background-color: black;
-        color:white
-    }
-    
+
+
+.montserrat {
+    font-family: "Montserrat", serif;
+    font-optical-sizing: auto;
+    font-weight: 400;
+    font-size: medium !important;
+    font-style: normal;
+}
+
+.suse {
+    font-family: "SUSE", serif;
+    font-optical-sizing: auto;
+    font-weight: 700;
+    font-style: normal;
+}
+
+
+.roboto-condensed {
+    font-family: "Roboto Condensed", serif;
+    font-optical-sizing: auto;
+    font-weight: 300;
+    font-style: normal;
+}
+
+
+
+
+.swiper-button-next,
+.swiper-button-prev {
+    color: gray !important;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+    padding-bottom: 50px;
+    font-size: 30px !important;
+}
+
+.swiper-pagination-bullet-active {
+    background-color: rgb(112, 112, 112) !important;
+}
+
+.swiper-pagination-bullet {
+    background-color: rgba(255, 0, 0, 0.5);
 }

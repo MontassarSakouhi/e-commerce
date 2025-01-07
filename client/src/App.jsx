@@ -8,6 +8,7 @@ import Collection from "./pages/Collection"
 import PlaceOrder from "./pages/PlaceOrder"
 import Product from "./pages/Product"
 import NavBar from "./components/NavBar"
+import Footer from "./components/footer/Footer"
 
 function App() {
 
@@ -24,7 +25,8 @@ function App() {
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/about" element={<About />} />
-      </Routes>
+              </Routes>
+              <Footer/>
 
     </div >
   )
