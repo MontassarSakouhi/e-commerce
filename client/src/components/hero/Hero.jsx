@@ -2,7 +2,7 @@
 import "swiper/css";
 import { Navigation, Pagination, Autoplay } from 'swiper/modules';
 import { Swiper, SwiperSlide } from 'swiper/react';
-import { assets } from '../assets/assets/assets'
+import { assets } from '../../assets/assets/assets'
 import 'swiper/css/pagination';
 import 'swiper/css/autoplay';
 

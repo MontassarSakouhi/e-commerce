@@ -1,12 +1,12 @@
 import { useEffect, useState } from "react"
-import Title from "./title"
+import Title from "../title/Title"
 import { useSelector } from "react-redux"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation, Autoplay } from 'swiper/modules';
 import 'swiper/css/navigation';
 import 'swiper/css/autoplay';
-import ProductItem from "./ProductItem";
+import ProductItem from "../productItem/ProductItem";
 
 const BestSeller = () => {
     const { products } = useSelector((state) => state.products)

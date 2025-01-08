@@ -1,38 +1,34 @@
 import React from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateSubCategory } from '../../redux/Filters/filtersSlice';
 
-const TypeFilter = ({ toggleCategories, handleSelected, handleSelection }) => {
-    const typeOptions = [
-        { label: 'Sweaters', value: 'sweaters' },
-        { label: 'Jeans', value: 'jeans' },
-        { label: 'Shirt', value: 'shirt' },
-        { label: 'Sweat', value: 'sweat' },
-        { label: 'Shoes', value: 'shoes' }
-    ];
+const TypeFilter = () => {
+    const typeOptions = ['sweaters', 'jeans', 'shirt', 'sweat', 'shoes'];
+    const dispatch = useDispatch()
+    const SelectedSubCategories = useSelector(state => state.filters.subCategory)
 
     return (
         <div className='bg-white py-3 rounded-b-lg'>
-            <h2 className='font-semibold text-md pb-2 pl-5'>Sort By</h2>
+            <h2 className='font-semibold text-md pb-2 pl-5'>Sort By Type</h2>
             <div className='px-1 flex justify-around'>
                 <Swiper spaceBetween={0} slidesPerView={4.5}>
-                    {typeOptions.map((option) => (
-                        <SwiperSlide key={option.value} className='!w-[80px]'>
+                    {typeOptions.map((option) => {
+                        const isActive = SelectedSubCategories.includes(option)
+                        return <SwiperSlide key={option} className='!w-[80px]'>
                             <button
                                 onClick={() => {
-                                    handleSelection(option.value)
-                                    toggleCategories(option.value)
-                                }
-                                }
-                                className={`text-xs hover:bg-gray-200 font-medium bg-gray-100 rounded-xl w-[70px] py-1 px-2 ${handleSelected[option.value]
-                                        ? 'bg-gray-500 text-gray-50 hover:bg-gray-400'
-                                        : 'hover:bg-gray-300 bg-gray-100'
-                                    }`}
+                                    dispatch(updateSubCategory(option))
+                                }}
+                                className={`text-xs ${isActive ? 'bg-gray-400 text-white' : 'bg-gray-100'} hover:bg-gray-200 font-medium bg-gray-100 rounded-xl w-[70px] py-1 px-2 `}
                             >
-                                {option.label}
+                                {option.charAt(0).toUpperCase() + option.slice(1)}
                             </button>
                         </SwiperSlide>
-                    ))}
+                    }
+
+                    )}
                 </Swiper>
             </div>
         </div>

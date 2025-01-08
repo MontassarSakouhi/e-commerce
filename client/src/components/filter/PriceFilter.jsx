@@ -1,35 +1,36 @@
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updatePriceSort } from '../../redux/Filters/filtersSlice';
 
-const PriceFilter = ({toggleCategories, handleSelection, handleSelected }) => {
+const PriceFilter = () => {
+    const dispatch = useDispatch()
+    const selectedPrice = useSelector(state => state.filters.priceSort)
     const priceOptions = [
-        { label: 'Price in ascending order', value: '<' },
-        { label: 'Price in descending order', value: '>' },
-        { label: 'filter only the small prices  ', value: '<<' }
+        { label: 'Price in ascending order', value: 'low' },
+        { label: 'Price in descending order', value: 'high' },
+        { label: 'filter only the small prices  ', value: 'equals' }
     ];
+
 
     return (
         <div className='bg-white py-3'>
             <h2 className='font-semibold text-md pb-2 pl-5'>Sort By Price</h2>
             <div className='px-1'>
                 <Swiper spaceBetween={30} slidesPerView={2}>
-                    {priceOptions.map((option) => (
-                        <SwiperSlide key={option.value}>
+                    {priceOptions.map((option) => {
+
+                        return (<SwiperSlide key={option.value}>
                             <button
-                                onClick={() => {
-                                    handleSelection(option.value)
-                                    toggleCategories(option.value)
-                                } }
-                                className={`text-xs hover:bg-gray-200 font-medium bg-gray-100 rounded-xl w-[150px] py-1 px-3 ${handleSelected[option.value]
-                                    ? 'bg-gray-500 text-gray-50 hover:bg-gray-400'
-                                    : 'hover:bg-gray-300 bg-gray-100'
-                                    }`}
+                                onClick={() => dispatch(updatePriceSort(option.value))}
+                                className={`text-xs transition ${selectedPrice === option.value ? 'bg-gray-400 text-white' : 'bg-gray-100'}  text-xs hover:bg-gray-500 hover:text-white font-medium bg-gray-100 rounded-xl w-[150px] py-1 px-3 `}
+
                             >
                                 {option.label}
                             </button>
-                        </SwiperSlide>
-                    ))}
+                        </SwiperSlide>)
+                    })}
                 </Swiper>
             </div>
         </div>

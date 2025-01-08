@@ -1,8 +1,8 @@
 
 import { useSelector } from "react-redux"
-import Title from "./title"
+import Title from "../title/Title"
 import { useEffect, useState } from "react"
-import ProductItem from "./ProductItem"
+import ProductItem from "../productItem/ProductItem"
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import { Navigation, Autoplay } from 'swiper/modules';
@@ -49,7 +49,7 @@ const LatestCollection = () => {
         {latestProducts.map((el) => (
           <SwiperSlide
             key={el._id}
-            className="flex justify-center items-center pl-[130px] lg:pl-6 my-2 " 
+            className="flex justify-center items-center pl-[130px] lg:pl-6 my-2 "
           >
             <ProductItem {...el} />
           </SwiperSlide>

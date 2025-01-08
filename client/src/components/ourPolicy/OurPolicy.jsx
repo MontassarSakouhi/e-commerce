@@ -1,4 +1,4 @@
-import { assets } from "../assets/assets/assets";
+import { assets } from "../../assets/assets/assets";
 
 const OurPolicy = () => {
     return (

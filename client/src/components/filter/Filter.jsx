@@ -2,58 +2,15 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Drawer } from 'antd';
 import PriceFilter from './PriceFilter';
-import FilterHeader from './FilterHeader';
 import SizeFilter from './SizeFilter';
 import CategoryFilter from './CategoryFilter';
 import TypeFilter from './TypeFilter';
-import { updateFilters } from '../../redux/Filters/filtersSlice';
+import { useEffect } from 'react';
 
 const Filter = () => {
-    const filters = { women: false, men: false, kids: false, '<': false, '>': false, '<<': false, xs: false, s: false, m: false, l: false, xl: false };
-    const { products } = useSelector(state => state.products);
-    const dispatch = useDispatch()
     const [open, setOpen] = useState(false);
-    const [handleSelected, setHandleSelected] = useState(filters);
-    const [categories, setCategories] = useState([]);
     const onClose = () => {
         setOpen(false);
-    };
-
-
-
-    const handleSelection = (filter) => {
-        if ((filter === '<' && (handleSelected['>'] || handleSelected['<<'])) ||
-            (filter === '>' && (handleSelected['<'] || handleSelected['<<'])) ||
-            (filter === '<<' && (handleSelected['<'] || handleSelected['>']))) {
-            return
-        }
-        const updatedFilters = {
-            ...handleSelected,
-            [filter]: !handleSelected[filter],
-        };
-        setHandleSelected((prevState) => ({
-            ...prevState,
-            [filter]: !prevState[filter],
-        }));
-        setHandleSelected(updatedFilters);
-        dispatch(updateFilters(updatedFilters));
-    };
-
-    const toggleCategories = (category) => {
-        if (
-            (category === '<' && (handleSelected['>'] || handleSelected['<<'])) ||
-            (category === '>' && (handleSelected['<'] || handleSelected['<<'])) ||
-            (category === '<<' && (handleSelected['<'] || handleSelected['>']))
-        ) {
-            return;
-        }
-
-        setCategories(oldVal => {
-            if (oldVal.includes(category)) {
-                return oldVal.filter(val => val !== category);
-            }
-            return [...oldVal, category];
-        });
     };
 
     return (
@@ -85,10 +42,10 @@ const Filter = () => {
                     open={open}
                     className="custom-drawer">
                     <div className="flex flex-col space-y-2 bg-slate-200 w-[350px] h-[400px] rounded-b-xl shadow-2xl">
-                        <CategoryFilter toggleCategories={toggleCategories} handleSelection={handleSelection} handleSelected={handleSelected} />
-                        <PriceFilter toggleCategories={toggleCategories} handleSelection={handleSelection} handleSelected={handleSelected} />
-                        <SizeFilter toggleCategories={toggleCategories} handleSelection={handleSelection} handleSelected={handleSelected} />
-                        <TypeFilter toggleCategories={toggleCategories} handleSelection={handleSelection} handleSelected={handleSelected} />
+                        <CategoryFilter  />
+                        <PriceFilter />
+                        <SizeFilter />
+                        <TypeFilter />
                     </div>
                 </Drawer>
             </div>

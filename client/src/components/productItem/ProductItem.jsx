@@ -1,7 +1,7 @@
 
 
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faSearch } from '@fortawesome/free-solid-svg-icons';
+import { Search } from 'lucide-react';
+
 import React from 'react'
 import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
@@ -19,9 +19,9 @@ const ProductItem = ({ _id, name, price, image }) => {
                 <p className='text-xs md:text-md text-gray-700 font-semibold  text-center'>{name}</p>
                 <div className='flex justify-between mx-2 items-center mt-3'>
                     <p className='text-center'>{price} {currency}</p>
-                    <button onClick={() => navigate(`/products/${_id}`)} className='bg-slate-100 font-semibold text-gray-800 py-1 px-2 rounded-lg hover:bg-slate-400 transition duration-300 ease-in-out'>
+                    <button onClick={() => navigate(`/product/${_id}`)} className='bg-slate-100 font-semibold text-gray-800 py-1 px-2 rounded-lg hover:bg-slate-400 transition duration-300 ease-in-out'>
 
-                    <FontAwesomeIcon icon={faSearch} className="text-black" />
+                        <Search />
                     </button>
                 </div>
             </div>

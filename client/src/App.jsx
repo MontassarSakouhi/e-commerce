@@ -7,8 +7,9 @@ import Orders from "./pages/Orders"
 import Collection from "./pages/Collection"
 import PlaceOrder from "./pages/PlaceOrder"
 import Product from "./pages/Product"
-import NavBar from "./components/NavBar"
+import NavBar from "./components/navBar/NavBar"
 import Footer from "./components/footer/Footer"
+import SearchBar from "./components/search/SearchBar"
 
 function App() {
 
@@ -16,6 +17,7 @@ function App() {
 
     <div className="px-4 sm:px-[5vw] md:px-[7vw] lg:px-[9vw] " >
       <NavBar />
+      <SearchBar />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/cart" element={<Cart />} />
@@ -25,8 +27,8 @@ function App() {
         <Route path="/place-order" element={<PlaceOrder />} />
         <Route path="/product/:productId" element={<Product />} />
         <Route path="/about" element={<About />} />
-              </Routes>
-              <Footer/>
+      </Routes>
+      <Footer />
 
     </div >
   )

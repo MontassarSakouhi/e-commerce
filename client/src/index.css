@@ -30,6 +30,14 @@ a.active hr {
     }
 }
 
+@media (max-width:640px) {
+    a.active {
+        background-color: black;
+        color: white
+    }
+
+}
+
 .blinking-dots span:nth-child(1) {
     animation: dot-blink 1s infinite 0s;
 }
@@ -65,7 +73,6 @@ a.active hr {
     font-style: normal;
 }
 
-
 .roboto-condensed {
     font-family: "Roboto Condensed", serif;
     font-optical-sizing: auto;
@@ -88,7 +95,10 @@ a.active hr {
 }
 
 .swiper-pagination-bullet-active {
-    background-color: rgb(112, 112, 112) !important;
+    background-color: white !important;
+    width: 30px !important;
+    border-radius: 20px !important;
+    overflow: hidden !important;
 }
 
 .swiper-pagination-bullet {
