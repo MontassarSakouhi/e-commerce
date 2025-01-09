@@ -8,7 +8,7 @@ const NavBar = () => {
     const dispatch = useDispatch()
     const [visible, setVisible] = useState(false)
     return (
-        <div className='flex item-center justify-between py-5 font-medium border-b-[1px] ' >
+        <div className='flex z-99999 item-center justify-between py-5 font-medium border-b-[1px] ' >
             <Link to={'/'}> <img src={assets.logo} alt="" className='w-64 p-0' /></Link>
             <ul className='hidden sm:flex items-center gap-5 text-sm text-gray-700   ' >
                 <NavLink to={'/'} >
