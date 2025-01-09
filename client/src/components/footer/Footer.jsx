@@ -4,7 +4,7 @@ import FooterRights from "./FooterRights";
 
 const Footer = () => {
   return (
-    <footer className="bg-white border-t text-sm border-gray-300 text-black py-8">
+    <footer className="bg-white border-t mt-[80px] text-sm border-gray-300 text-black py-8">
       <div className="container mx-auto flex flex-row lg:flex-row justify-between">
         <div className="mb-6 lg:mb-0">
           <h3 className="font-bold mb-4">For Business</h3>

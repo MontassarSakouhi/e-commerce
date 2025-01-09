@@ -2,7 +2,7 @@ import { assets } from "../../assets/assets/assets";
 
 const OurPolicy = () => {
     return (
-        <div className="flex justify-around py-[80px]">
+        <div className="flex justify-around pt-[80px]">
             <div className="flex flex-col items-center">
                 <img src={assets.support_img} className="w-12 sm:w-13 sm:mb-6" alt="" />
                 <p className="roboto-condensed text-[15px] text-center sm:text-[20px]">Round-the-Clock Assistance</p>

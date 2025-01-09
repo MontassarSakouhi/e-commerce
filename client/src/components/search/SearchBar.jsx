@@ -10,7 +10,6 @@ import { useLocation } from 'react-router-dom'
 const SearchBar = () => {
     const { showSearch } = useSelector(state => state.search)
     const location = useLocation()
-    console.log(location.pathname)
 
     return (
 

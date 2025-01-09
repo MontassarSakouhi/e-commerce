@@ -50,7 +50,7 @@ const NavBar = () => {
                 </Link>
                 <img onClick={() => setVisible(true)} src={assets.menu_icon} alt="" className='w-5 sm:hidden cursor-pointer' />
             </div>
-            <div className={`absolute  top-0 right-0 bottom-0 h-[400px] font-normal transition-all  ${visible ? 'w-full' : 'hidden'}  bg-white`} >
+            <div className={`absolute  top-0 right-0 bottom-0 h-[400px] font-normal transition-all  ${visible ? 'w-full' : 'hidden'}  bg-white !z-9999`} >
                 <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 mb-5 bg-slate-50 w-[100px] m-1 rounded-lg ' >
                     <img src={assets.dropdown_icon} alt="" className='w-3 rotate-180' />
                     <p>Back</p>
