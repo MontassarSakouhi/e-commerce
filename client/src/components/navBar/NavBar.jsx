@@ -1,14 +1,31 @@
 import { assets } from '../../assets/assets/assets.js'
 import { NavLink, Link } from 'react-router-dom'
 import React, { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { toggleSearch } from '../../redux/search/searchSlice.jsx'
+import { Drawer } from 'antd';
+import Cart from '../cart/Cart.jsx'
+
 
 const NavBar = () => {
     const dispatch = useDispatch()
+    const { cartCount } = useSelector(state => state.cart)
     const [visible, setVisible] = useState(false)
+    const [open, setOpen] = useState(false);
+    const [loading, setLoading] = useState(true);
+
+    const showLoading = () => {
+        setOpen(true);
+        setLoading(true);
+
+        setTimeout(() => {
+            setLoading(false);
+        }, 1000);
+    };
+
+
     return (
-        <div className='flex z-99999 item-center justify-between py-5 font-medium border-b-[1px] ' >
+        <div className='flex  item-center justify-between py-5 font-medium border-b-[1px] ' >
             <Link to={'/'}> <img src={assets.logo} alt="" className='w-64 p-0' /></Link>
             <ul className='hidden sm:flex items-center gap-5 text-sm text-gray-700   ' >
                 <NavLink to={'/'} >
@@ -44,13 +61,27 @@ const NavBar = () => {
                     </div>
                 </div>
 
-                <Link to={'/cart'} className='relative' >
+                <div onClick={showLoading} className='relative cursor-pointer' >
                     <img src={assets.cart_icon} alt="" className='w-5 min-w-5' />
-                    <p className='absolute text-[10px] right-[-5px] top-[10px] text-white bg-black w-4 text-center rounded-full ' >0</p>
-                </Link>
+                    <p className='absolute text-[10px] right-[-5px] top-[10px] text-white bg-black w-4 text-center rounded-full ' > {cartCount} </p>
+                </div>
+                <Drawer
+                    closable
+                    destroyOnClose
+                    title={<p>Welcome to your cart</p>}
+                    open={open}
+                    loading={loading}
+                    onClose={() => setOpen(false)}
+                    styles={{ body: { height: '80%', padding: 0 } }}
+
+                    className='my-2 !p-0 !mr-8 rounded-lg '
+                >
+                    <Cart setOpen={setOpen} />
+
+                </Drawer>
                 <img onClick={() => setVisible(true)} src={assets.menu_icon} alt="" className='w-5 sm:hidden cursor-pointer' />
             </div>
-            <div className={`absolute  top-0 right-0 bottom-0 h-[400px] font-normal transition-all  ${visible ? 'w-full' : 'hidden'}  bg-white !z-9999`} >
+            <div className={`absolute  top-0 right-0 bottom-0 h-[250px] font-normal transition-all  ${visible ? 'w-full' : 'hidden'}  bg-white z-[9999]`} >
                 <div onClick={() => setVisible(false)} className='flex items-center gap-4 p-3 mb-5 bg-slate-50 w-[100px] m-1 rounded-lg ' >
                     <img src={assets.dropdown_icon} alt="" className='w-3 rotate-180' />
                     <p>Back</p>

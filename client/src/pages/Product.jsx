@@ -2,21 +2,21 @@ import React, { useState } from 'react';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import ViewProduct from '../components/product/ViewProduct';
+import { useEffect } from 'react';
 
 const Product = () => {
-  const [swiper, setSwiper] = useState(null);
-
-  const changeSlide = (index) => {
-    if (swiper) {
-      swiper.slideTo(index);
-    }
-  };
+  useEffect(() => {
+    window.scroll({ top: 0 })
+  }, []);
 
   return (
     <div>
-    <ViewProduct/>
+      <ViewProduct />
     </div>
   );
+
 };
+
+
 
 export default Product;

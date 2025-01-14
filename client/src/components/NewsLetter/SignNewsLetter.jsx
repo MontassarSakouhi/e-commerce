@@ -1,4 +1,6 @@
+
 const SignNewsLetter = ({ formik }) => {
+
     return (
         <div className="suse  ">
             <p className="text-center">Your inspiration interests us. What will you choose?</p>

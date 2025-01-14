@@ -5,29 +5,25 @@ import 'swiper/css';
 import { useState } from 'react';
 
 const ProductSwiper = ({ product, setSwiper }) => {
-
-
-
     return (
-        <div className=" ml-6 min-w-[450px] max-w-[450px] max-h-[400px] sm:max-h-[640px] relative overflow-hidden">
+        <div className="sm:ml-6 ml-0 w-full max-w-[450px]  relative">
             <Swiper
                 onSwiper={setSwiper}
                 spaceBetween={50}
                 slidesPerView={1}
-
             >
                 {product.image.map((el, index) => (
-                    <SwiperSlide key={index} className="w-full h-[300px]">
+                    <SwiperSlide key={index} className="">
                         <img
-                            className="object-cover h-full w-full"
+                            className="w-full  h-auto aspect-square sm:aspect-auto object-center sm:object-cover object-contain"
                             src={el}
-
                         />
                     </SwiperSlide>
                 ))}
             </Swiper>
         </div>
-    )
-}
+    );
+};
+
 
 export default ProductSwiper

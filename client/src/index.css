@@ -95,7 +95,7 @@ a.active hr {
 }
 
 .swiper-pagination-bullet-active {
-    background-color: white !important;
+    background-color: gray !important;
     width: 30px !important;
     border-radius: 20px !important;
     overflow: hidden !important;

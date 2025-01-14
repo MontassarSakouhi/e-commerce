@@ -39,7 +39,7 @@ const BestSeller = () => {
                     1280: { slidesPerView: 5 },
                 }}
                 pagination={{ clickable: true }}
-                className="w-full my-9 shadow-md"
+                className="w-full my-9 "
             >
                 {bestSellers.map((el) => (
                     <SwiperSlide
