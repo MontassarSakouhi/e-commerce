@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { toggleSearch } from '../../redux/search/searchSlice.jsx'
 import { Drawer } from 'antd';
 import Cart from '../cart/Cart.jsx'
+import Login from '../login/Login.jsx'
 
 
 const NavBar = () => {
@@ -13,6 +14,7 @@ const NavBar = () => {
     const [visible, setVisible] = useState(false)
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
+    const [profileDrawerVisible, setProfileDrawerVisible] = useState(false);
 
     const showLoading = () => {
         setOpen(true);
@@ -22,7 +24,6 @@ const NavBar = () => {
             setLoading(false);
         }, 1000);
     };
-
 
     return (
         <div className='flex  item-center justify-between py-5 font-medium border-b-[1px] ' >
@@ -49,7 +50,12 @@ const NavBar = () => {
             <div className='flex gap-6 items-center' >
                 <img src={assets.search_icon} onClick={() => dispatch(toggleSearch(true))} alt="" className='w-5 cursor-pointer' />
                 <div className='group relative' >
-                    <img src={assets.profile_icon} alt="" className='w-5 cursor-pointer' />
+                    <img
+                        src={assets.profile_icon}
+                        alt=""
+                        className='w-5 cursor-pointer'
+                        onClick={() => setProfileDrawerVisible(true)}
+                    />
 
                     <div className='group-hover:block hidden absolute dropdown-menu pos right-[-50px] pt-4  ' >
                         <div className='flex flex-col gap-2 w-32 py-6 px-5 bg-slate-100 text-gray-700 rounded-lg'>
@@ -57,7 +63,6 @@ const NavBar = () => {
                             <p className='hover:text-black hover:underline cursor-pointer text-center' >Orders</p>
                             <p className='hover:text-black hover:underline cursor-pointer text-center' >Logout</p>
                         </div>
-
                     </div>
                 </div>
 
@@ -73,12 +78,23 @@ const NavBar = () => {
                     loading={loading}
                     onClose={() => setOpen(false)}
                     styles={{ body: { height: '80%', padding: 0 } }}
-
                     className='my-2 !p-0 !mr-8 rounded-lg '
                 >
                     <Cart setOpen={setOpen} />
-
                 </Drawer>
+
+                <Drawer
+                    closable
+                    destroyOnClose
+                    title={<p>Login / Register</p>}
+                    open={profileDrawerVisible}
+                    styles={{ body: { height: '80%', padding: 0 } }}
+                    onClose={() => setProfileDrawerVisible(false)}
+                    className='my-2 !p-0 !mr-8 rounded-lg '
+                >
+                    <Login />
+                </Drawer>
+
                 <img onClick={() => setVisible(true)} src={assets.menu_icon} alt="" className='w-5 sm:hidden cursor-pointer' />
             </div>
             <div className={`absolute  top-0 right-0 bottom-0 h-[250px] font-normal transition-all  ${visible ? 'w-full' : 'hidden'}  bg-white z-[9999]`} >
@@ -92,22 +108,15 @@ const NavBar = () => {
                     </NavLink>
                     <NavLink onClick={() => setVisible(false)} to={'/collection'} className='p-2 pl-5 border-t-2' >
                         <p>COLLECTION</p>
-
                     </NavLink>
                     <NavLink onClick={() => setVisible(false)} to={'/about'} className='p-2 pl-5 border-t-2' >
                         <p>ABOUT</p>
-
                     </NavLink>
                     <NavLink onClick={() => setVisible(false)} to={'/contact'} className='p-2 pl-5 border-t-2' >
                         <p>CONTACT</p>
-
                     </NavLink>
-
                 </div>
-
             </div>
-
-
         </div>
     )
 }

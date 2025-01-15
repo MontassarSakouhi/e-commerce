@@ -3,12 +3,13 @@ import * as Yup from 'yup';
 import SignNewsLetter from './SignNewsLetter';
 import { useState } from 'react';
 import { Axios } from "../../services/api";
+import { Spin } from 'antd'; 
 
 const NewsLetter = () => {
     const [active, setActive] = useState(false);
     const [loading, setLoading] = useState(false);
     const [handleSubmit, setHandleSubmit] = useState(true);
-    const [errorMessage, setErrorMessage] = useState('');  // New error message state
+    const [errorMessage, setErrorMessage] = useState('');  
 
     const formik = useFormik({
         initialValues: {
@@ -27,14 +28,11 @@ const NewsLetter = () => {
         }),
         onSubmit: async (values) => {
             setErrorMessage('');
+            setLoading(true);
 
             try {
                 const response = await Axios.post('/voucher/add', values);
-
-                setLoading(true);
-                setTimeout(() => {
-                    setHandleSubmit(false);
-                }, 3000);
+                setHandleSubmit(false); 
             } catch (error) {
                 if (!error.response) {
                     console.error("Network error. Please try again later.");
@@ -45,6 +43,8 @@ const NewsLetter = () => {
                 } else {
                     setErrorMessage('Something went wrong, please try again!');
                 }
+            } finally {
+                setLoading(false); 
             }
         }
     });
@@ -85,7 +85,11 @@ const NewsLetter = () => {
                             type="submit"
                             className="w-full bg-black py-2 text-lg text-white rounded-full"
                         >
-                            {loading ? <p>Loading <span className="blinking-dots"><span>.</span><span>.</span><span>.</span></span></p> : "I'm in"}
+                            {loading ? (
+                                <Spin size="small" />
+                            ) : (
+                                "I'm in"
+                            )}
                         </button>
                     </form>
                 </div>

@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Welcome to Our Newsletter!</title>
+  <style>
+    body {
+      font-family: 'Arial', sans-serif;
+      background-color: #f4f4f4;
+      margin: 0;
+      padding: 0;
+      color: #333;
+      text-align: center;
+    }
+
+    .container {
+      background-color: #ffffff;
+      max-width: 600px;
+      margin: 50px auto;
+      padding: 30px;
+      border-radius: 15px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+      font-size: 2.5rem;
+      color: #333;
+      margin-bottom: 20px;
+    }
+
+    p {
+      font-size: 1.1rem;
+      margin-bottom: 15px;
+    }
+
+    .voucher-container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 25px;
+      background-color: #f9f9f9;
+      border-radius: 15px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+      margin-top: 20px;
+    }
+
+    .voucher-code {
+      font-size: 32px;
+      font-weight: bold;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #333;
+      background-color: #e0e0e0;
+      padding: 15px 30px;
+      border-radius: 10px;
+      display: inline-block;
+      margin-bottom: 20px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+
+    .footer {
+      margin-top: 40px;
+      font-size: 1rem;
+      color: #666;
+    }
+
+    .footer a {
+      color: #333;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    .footer a:hover {
+      text-decoration: underline;
+    }
+
+    .info-message {
+      font-size: 1rem;
+      color: #666;
+      margin-top: 30px;
+    }
+
+    img {
+      max-width: 150px;
+      margin-bottom: 30px;
+    }
+  </style>
+</head>
+
+<body>
+  <img src='../images/logo.png' alt="MonStyle Logo">
+  <div class="container">
+    <h1>Welcome to Our Newsletter!</h1>
+    <p>Thanks for subscribing. Here is your exclusive voucher code:</p>
+    <div class="voucher-container">
+      <div class="voucher-code" id="voucherCode">{{VOUCHER_CODE}}</div>
+    </div>
+    <p>Use this code at checkout. It expires in 7 days, so don't miss out!</p>
+    <p>Happy Shopping! – The MonStyle Team</p>
+
+    <div class="info-message">
+      <p>We'll make sure to keep you posted when we add new products, trends, and exclusive offers!</p>
+    </div>
+
+    <div class="footer">
+      <p>For support or inquiries, feel free to <a href="mailto:support@monstyle.com">contact us</a>.</p>
+    </div>
+  </div>
+</body>
+
+</html>

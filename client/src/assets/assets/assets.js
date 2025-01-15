@@ -17,12 +17,14 @@ import star_icon from './star_icon.png'
 import support_img from './support_img.png'
 import menu_icon from './menu_icon.png'
 import razorpay_logo from './razorpay_logo.png'
-import stripe_logo from './stripe_logo.png'
 import cross_icon from './cross_icon.png'
 import hero_img from './hero.png'
 import hero1_img from './hero1.png'
 import hero2_img from './hero2.png'
+import contactUs_img from './contactUs.png'
 // import hero3_img from './hero3.png'
+
+
 export const assets = {
     logo,
     hero_img,
@@ -40,8 +42,8 @@ export const assets = {
     support_img,
     menu_icon,
     razorpay_logo,
-    stripe_logo,
-    cross_icon
+    cross_icon,
+    contactUs_img
 }
 
 export const products = [

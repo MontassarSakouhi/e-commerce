@@ -5,6 +5,8 @@ const initialState = {
     cart: {},
     cartCount: 0,
     validCode: false, 
+    totalPrice:0,
+    shippingFee:7
 
 }
 
@@ -60,11 +62,14 @@ export const cartSlice = createSlice({
         setValidCode: (state, action) => {
             state.validCode = action.payload;
         },
+        updateTotalPrice: (state, action) => {
+            state.totalPrice = action.payload;
+        },
 
     },
 })
 
 
-export const { updateCart, updateCartQuantity,deleteFromCart,setValidCode  } = cartSlice.actions
+export const { updateCart, updateCartQuantity,deleteFromCart,setValidCode,updateTotalPrice  } = cartSlice.actions
 
 export default cartSlice.reducer

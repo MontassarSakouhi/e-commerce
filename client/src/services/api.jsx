@@ -12,6 +12,12 @@ const axiosConfig = {
     },
 };
 
+const token = localStorage.getItem("token");
+
+if (token) {
+    axiosConfig.headers["Authorization"] = `Bearer ${token}`;
+}
+
 const configuredAxios = axios.create(axiosConfig);
 
 export const Axios = configuredAxios;

@@ -17,8 +17,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(cors());
 
 const voucherRouter = require('./routes/Voucher.router');
+const userRouter = require('./routes/User.Router');
+const productRouter = require('./routes/Product.router');
 
 app.use('/voucher', voucherRouter);
+app.use('/user', userRouter);
+app.use('/product', productRouter);
 
 
 
