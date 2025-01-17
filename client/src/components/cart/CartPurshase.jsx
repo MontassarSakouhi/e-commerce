@@ -33,7 +33,7 @@ const CartPurchase = ({ cartItems, products, setOpen }) => {
     }, [cartItems, products, validCode]);
 
     return (
-        <div className='fixed bottom-0 w-[378px] bg-white p-4 border-t-[1px] shadow-md'>
+        <div className=' bottom-0 w-[378px] bg-white p-4 border-t-[1px] shadow-md'>
             <div className='flex justify-between items-center'>
                 <div className='text-lg font-semibold'>
                     Total <span className='text-gray-500 text-xs '>Including VAT</span>

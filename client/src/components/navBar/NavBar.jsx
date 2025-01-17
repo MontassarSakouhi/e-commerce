@@ -6,6 +6,7 @@ import { toggleSearch } from '../../redux/search/searchSlice.jsx'
 import { Drawer } from 'antd';
 import Cart from '../cart/Cart.jsx'
 import Login from '../login/Login.jsx'
+import { useMediaQuery } from "@uidotdev/usehooks";
 
 
 const NavBar = () => {
@@ -15,6 +16,7 @@ const NavBar = () => {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
     const [profileDrawerVisible, setProfileDrawerVisible] = useState(false);
+    const isSmallDevice = useMediaQuery("only screen and (max-width : 640px)");
 
     const showLoading = () => {
         setOpen(true);
@@ -91,6 +93,7 @@ const NavBar = () => {
                     styles={{ body: { height: '80%', padding: 0 } }}
                     onClose={() => setProfileDrawerVisible(false)}
                     className='my-2 !p-0 !mr-8 rounded-lg '
+                    width={isSmallDevice ? "100%" : "24%"}
                 >
                     <Login />
                 </Drawer>

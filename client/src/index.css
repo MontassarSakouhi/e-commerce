@@ -57,7 +57,6 @@ a.active hr {
     font-style: normal;
 }
 
-
 .montserrat {
     font-family: "Montserrat", serif;
     font-optical-sizing: auto;
@@ -104,3 +103,4 @@ a.active hr {
 .swiper-pagination-bullet {
     background-color: rgba(255, 0, 0, 0.5);
 }
+

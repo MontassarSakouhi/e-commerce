@@ -7,7 +7,7 @@ import CartPurshase from "./CartPurshase"
 
 
 
-const Cart = ({setOpen}) => {
+const Cart = ({ setOpen }) => {
     const { products } = useSelector(state => state.products)
     const { cart } = useSelector(state => state.cart)
     const [cartItems, setCartItems] = useState([])
@@ -30,16 +30,21 @@ const Cart = ({setOpen}) => {
 
 
     return (
-        <div className='  w-full p-1 h-full mb-[500px] ' >
-            {
-                cartItems.map((el, i) => <CartItem key={i} {...el} products={products} />)
-            }
+        <div>
+            <div className="relative w-full p-1 h-[580px] overflow-y-scroll overflow-x-hidden scrollbar-thin scrollbar-thumb-gray-400 hover:scrollbar-thumb-gray-600 hover:scrollbar-thumb-rounded-md">
+                {
+                    cartItems.map((el, i) => <CartItem key={i} {...el} products={products} />)
+                }
 
-          <RedeemCode />
+                <RedeemCode />
 
-         <CartPurshase cartItems={cartItems} products={products} setOpen={setOpen} />
+
+
+            </div>
+            <CartPurshase cartItems={cartItems} products={products} setOpen={setOpen} />
 
         </div>
+
     )
 }
 

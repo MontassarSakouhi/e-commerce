@@ -3,10 +3,15 @@ import { useFormik } from 'formik'
 import * as Yup from 'yup'
 import { Axios } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
+import { Spin } from 'antd'
+import { LoadingOutlined } from '@ant-design/icons';
+
 
 const LoginRegister = () => {
     const [isLogin, setIsLogin] = useState(true)
     const [errors, setErrors] = useState('')
+    const [loading, setLoading] = useState(false);
+
     const navigate = useNavigate();
 
     const loginFormik = useFormik({
@@ -18,16 +23,18 @@ const LoginRegister = () => {
             email: Yup.string().email('Invalid email format').required('Email is required'),
             password: Yup.string().min(6, 'Password should be at least 6 characters').required('Password is required'),
         }),
-        onSubmit:async (values) => {
+        onSubmit: async (values) => {
             try {
                 const response = await Axios.post('/user/login', values);
+
                 const { token, user } = response.data;
-        
+                console.log(token, user)
+
                 localStorage.setItem('token', token);
-                
+
                 if (user.isAdmin) {
-                    history.push('/admin-dashboard'); 
-                } 
+                    navigate('/admin')
+                }
             } catch (error) {
                 console.error("Login failed:", error);
             }
@@ -49,10 +56,17 @@ const LoginRegister = () => {
         }),
         onSubmit: async (values) => {
             try {
+                setLoading(true)
                 const response = await Axios.post('/user/register', values)
+
                 setIsLogin(true)
-                setErrors('')
+                setLoading(false)
+                // toast('Registered successfully') 
+                message.success('Registered successfully'); // kifkif
+
+
             } catch (error) {
+                setLoading(false)
                 setErrors(error.response?.data?.message || 'Something went wrong. Please try again.')
             }
 
@@ -159,10 +173,13 @@ const LoginRegister = () => {
                     )}
 
                     <div className="flex justify-between text-sm text-gray-600 mt-3">
-                        
+
                         <span
                             className="cursor-pointer underline hover:text-blue-500 "
-                            onClick={() => setIsLogin(true)}
+                            onClick={() => {
+                                setIsLogin(true)
+                            }
+                            }
                         >
                             I already got an account
                         </span>
@@ -170,9 +187,11 @@ const LoginRegister = () => {
 
                     </div>
 
-                        <button className="bg-gray-400 text-white rounded-md py-2 mt-5" type="submit">
-                            Create Account
-                        </button>
+                    <button className={`bg-gray-400 text-white rounded-md py-2 mt-5  ${loading ? 'disabled ' : ''}   `} type="submit">
+                        {loading ? <Spin className='text-white' indicator={<LoadingOutlined spin />} size="medium" />
+
+                            : 'Create Account'}
+                    </button>
                 </form>
             )}
         </div>

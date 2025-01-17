@@ -1,25 +1,31 @@
-const jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken');
+const usersModel = require('../models/users.model');
 
-const isAdmin = (req, res, next) => {
-    const token = req.header('Authorization')
-
+const isAdmin = async (req, res, next) => {
+    const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
     if (!token) {
-        return res.status(401).json({ message: 'Access denied. No token provided.' })
+        console.log('No token provided');
+        return res.status(401).json({ message: 'Access denied. No token provided.' });
     }
 
     try {
-        const decoded = jwt.verify(token, process.env.JWT_SECRET)
-        req.user = decoded 
+        console.log(1);
+        const decoded = jwt.verify(token, process.env.JWT_SECRET);
+        req.user = decoded;
+        console.log('Decoded token:', decoded);
 
-   
-        if (!req.user.isAdmin) {
-            return res.status(403).json({ message: 'Access denied. You are not an admin.' })
+        const user = await usersModel.findById(decoded.id);
+        console.log('User found:', user);
+
+        if (!user || !user.isAdmin) {
+            return res.status(403).json({ message: 'Access denied. You are not an admin.' });
         }
 
-        next() 
+        next();
     } catch (error) {
-        res.status(400).json({ message: 'Invalid token.' })
+        console.error('Error during token verification or database query:', error);
+        res.status(400).json({ message: 'Invalid token.' });
     }
-}
+};
 
 module.exports = isAdmin
