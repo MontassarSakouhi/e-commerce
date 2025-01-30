@@ -5,10 +5,10 @@ const isAdmin = require('../middlewares/isAdmin');
 
 router.post('/add', isAdmin, addProduct);
 
-router.post('/list', listProducts);
+router.get('/list', listProducts);
 
 router.post('/remove', isAdmin, removeProduct);
 
-router.get('/single', singleProduct);
+router.post('/single',isAdmin, singleProduct);
 
 module.exports = router;

@@ -37,6 +37,7 @@ const listProducts = async (req, res) => {
 const singleProduct = async (req, res) => {
     try {
         const { id } = req.body;
+        console.log(id);
         const product = await Product.findById(id);
 
         if (!product) {
@@ -51,8 +52,8 @@ const singleProduct = async (req, res) => {
 
 const removeProduct = async (req, res) => {
     try {
-        const { productId } = req.body;
-        const product = await Product.findByIdAndDelete(productId);
+        const { id } = req.body;
+        const product = await Product.findByIdAndDelete(id);
 
         if (!product) {
             return res.status(404).send({ message: 'Product not found' });

@@ -73,7 +73,7 @@ const AddProduct = () => {
 
     return (
         <div className='w-[500px]'>
-            <div className="my-3 text-[30px] text-white">Upload Images</div>
+            <div className="my-3 text-[30px] ">Upload Images</div>
 
             <Formik
                 initialValues={{
@@ -110,44 +110,44 @@ const AddProduct = () => {
                 {({ setFieldValue, handleSubmit, values }) => (
                     <Form onSubmit={handleSubmit} className="space-y-4">
                         <div>
-                            <label htmlFor="name" className="text-white">Product Name</label>
+                            <label htmlFor="name" className="font-bold">Product Name :</label>
                             <Field
                                 name="name"
                                 as={Input}
-                                className="w-full text-white bg-gray-800 border border-white p-2 rounded-lg focus:bg-gray-700"
+                                className="w-full  border  p-2 rounded-lg focus:bg-gray-200"
                             />
                             <ErrorMessage name="name" component="div" className="text-red-500" />
                         </div>
 
                         <div>
-                            <label htmlFor="description" className="text-white">Description</label>
+                            <label htmlFor="description" className="font-bold">Description :</label>
                             <Field
                                 name="description"
                                 as={Input.TextArea}
-                                className="w-full text-white bg-gray-800 border border-white p-2 rounded-lg focus:bg-gray-700"
+                                className="w-full  p-2 rounded-lg focus:bg-gray-200"
                             />
                             <ErrorMessage name="description" component="div" className="text-red-500" />
                         </div>
 
                         <div>
-                            <label htmlFor="price" className="text-white">Price</label>
+                            <label htmlFor="price" className="font-bold">Price :</label>
                             <Field
                                 name="price"
                                 type="number"
                                 as={Input}
-                                className="w-full text-white bg-gray-800 border border-white p-2 rounded-lg focus:bg-gray-700"
+                                className="w-full  p-2 rounded-lg focus:bg-gray-200"
                             />
                             <ErrorMessage name="price" component="div" className="text-red-500" />
                         </div>
 
                         <div>
-                            <label htmlFor="category" className="text-white">Category</label>
+                            <label htmlFor="category" className="font-bold">Category :</label>
                             <Field name="category">
                                 {({ field }) => (
                                     <Select
                                         {...field}
                                         value={field.value}
-                                        className="w-full text-white bg-gray-800 border border-white  rounded-lg focus:bg-gray-700"
+                                        className="w-full text-white bg-gray-800 border border-white  rounded-lg focus:bg-gray-200"
                                         onChange={(value) => setFieldValue("category", value)}
                                     >
                                         <Option value="kids">Kids</Option>
@@ -160,7 +160,7 @@ const AddProduct = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="subCategory" className="text-white">Subcategory</label>
+                            <label htmlFor="subCategory" className="font-bold">Subcategory :</label>
                             <Field name="subCategory">
                                 {({ field }) => (
                                     <Select
@@ -181,13 +181,13 @@ const AddProduct = () => {
                         </div>
 
                         <div>
-                            <label htmlFor="sizes" className="text-white">Sizes</label>
+                            <label htmlFor="sizes" className="font-bold">Sizes :</label>
                             <Select
                                 mode="multiple"
                                 placeholder="Select sizes"
                                 value={values.sizes}
                                 onChange={(value) => setFieldValue('sizes', value)}
-                                className="w-full text-black !bg-gray-800 border border-white  rounded-lg focus:bg-gray-700"
+                                className="w-full text-black !bg-gray-800 border border-white  rounded-lg focus:bg-gray-200"
                             >
                                 <Option value="S">S</Option>
                                 <Option value="M">M</Option>
@@ -199,12 +199,14 @@ const AddProduct = () => {
 
                         <div>
                             <Upload
-                                listType="picture-card"
+                                listType="picture-circle"
                                 fileList={fileList}
                                 onChange={(info) => handleChange(info, setFieldValue)}
                                 onPreview={handlePreview}
                                 beforeUpload={() => false}
                                 action={null}
+                                className=''
+
                             >
                                 {fileList.length >= 8 ? null : uploadButton}
                             </Upload>
@@ -215,14 +217,15 @@ const AddProduct = () => {
                             <Checkbox
                                 checked={values.bestseller}
                                 onChange={(e) => setFieldValue('bestseller', e.target.checked)}
-                                className="text-white  "
+                                className="font-semibold  "
                             >
                                 Bestseller
                             </Checkbox>
                         </div>
+                        <img src="" alt="" />
 
                         <div>
-                            <Button htmlType="submit" className="w-[150px] bg-gray-600 !hover:bg-gray-700 text-white">
+                            <Button disabled={isLoading} htmlType="submit" className="w-[150px] bg-gray-100 ">
                                 {isLoading ? <Spin className='text-white' indicator={<LoadingOutlined spin />} size="medium" />
 
                                     : 'Submit'}

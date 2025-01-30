@@ -1,23 +1,24 @@
 import axios from "axios";
 
-const REACT_APP_API_ENDPOINT_BASE_URL =
-    "http://localhost:3000/";
+const REACT_APP_API_ENDPOINT_BASE_URL = "http://localhost:3000/";
 
-const axiosConfig = {
-    mode: "cors",
+const configuredAxios = axios.create({
     baseURL: REACT_APP_API_ENDPOINT_BASE_URL,
     headers: {
         "Content-type": "application/json",
         Accept: "application/json",
     },
-};
+    mode: "cors",
+});
 
-const token = localStorage.getItem("token");
-
-if (token) {
-    axiosConfig.headers["Authorization"] = `Bearer ${token}`;
-}
-
-const configuredAxios = axios.create(axiosConfig);
+configuredAxios.interceptors.request.use((config) => {
+    const token = localStorage.getItem("token");
+    if (token) {
+        config.headers["Authorization"] = `Bearer ${token}`;
+    }
+    return config;
+}, (error) => {
+    return Promise.reject(error);
+});
 
 export const Axios = configuredAxios;

@@ -36,7 +36,7 @@ const PlaceOrder = () => {
   const { currency } = useSelector(state => state.products)
   const { totalPrice, shippingFee } = useSelector(state => state.cart)
   const [paymentMethod, setPaymentMethod] = useState('cash')
-const navigate=useNavigate()
+  const navigate = useNavigate()
 
   return (
     <Formik
@@ -153,7 +153,7 @@ const navigate=useNavigate()
                 <p className='font-bold' > Total </p>
                 <p> {totalPrice ? totalPrice + 7 : '0'}  <span className='text-[13px] font-semibold ' >{currency}</span></p>
               </div>
-              <div  className='flex gap-3 justify-around py-4 flex-row' >
+              <div className='flex gap-3 justify-around py-4 flex-row' >
                 <div onClick={() => setPaymentMethod('cash')} className='flex items-center gap-3 border rounded-xl px-5 py-2 cursor-pointer ' >
                   <p className={`min-w-3.5 h-3.5 border rounded-full ${paymentMethod === 'cash' && 'bg-green-400'} `} ></p>
                   <p className='font-semibold' >CASH ON DELIVERY</p>
@@ -164,11 +164,13 @@ const navigate=useNavigate()
                 </div>
               </div>
               <div className='flex justify-center' >
-                <button onClick={()=>{
-                  if(paymentMethod){
-                    navigate('/orders')
-                  }
-                }} className='w-[350px] bg-gray-400 active:bg-gray-500 py-2 rounded-full font-semibold text-white align-middle ' >PLACE ORDER</button>
+                <button
+                  type="submit"  
+                  className="w-[350px] bg-gray-400 active:bg-gray-500 py-2 rounded-full font-semibold text-white align-middle"
+                >
+                  PLACE ORDER
+                </button>
+
               </div>
             </div>
           </div>

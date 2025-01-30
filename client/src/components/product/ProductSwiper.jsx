@@ -12,7 +12,7 @@ const ProductSwiper = ({ product, setSwiper }) => {
                 spaceBetween={50}
                 slidesPerView={1}
             >
-                {product.image.map((el, index) => (
+                {product.images.map((el, index) => (
                     <SwiperSlide key={index} className="">
                         <img
                             className="w-full  h-auto aspect-square sm:aspect-auto object-center sm:object-cover object-contain"

@@ -5,6 +5,7 @@ import { Axios } from '../../services/api'
 import { useNavigate } from 'react-router-dom'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
+import { toast } from 'react-toastify';
 
 
 const LoginRegister = () => {
@@ -28,12 +29,12 @@ const LoginRegister = () => {
                 const response = await Axios.post('/user/login', values);
 
                 const { token, user } = response.data;
-                console.log(token, user)
+                
 
                 localStorage.setItem('token', token);
 
                 if (user.isAdmin) {
-                    navigate('/admin')
+                    navigate('/admin/add')
                 }
             } catch (error) {
                 console.error("Login failed:", error);
@@ -54,15 +55,16 @@ const LoginRegister = () => {
             email: Yup.string().email('Invalid email format').required('Email is required'),
             password: Yup.string().min(6, 'Password should be at least 6 characters').required('Password is required'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {
                 setLoading(true)
-                const response = await Axios.post('/user/register', values)
+                await Axios.post('/user/register', values)
 
                 setIsLogin(true)
                 setLoading(false)
-                // toast('Registered successfully') 
-                message.success('Registered successfully'); // kifkif
+                toast.success('Registered successfully') 
+                //zeaeaze
+                resetForm({ firstName: '', lastName: '', email: '', password: '' });
 
 
             } catch (error) {

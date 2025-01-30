@@ -11,7 +11,7 @@ const CartItem = ({ _id, size, quantity, products }) => {
     return (
         <div className=' p-2 border-b-[1px] ' >
             <div className='flex' >
-                <img className=' h-[150px] ' src={product.image[1]} alt="" />
+                <img className=' h-[150px] ' src={product.images[1]} alt="" />
                 <div className='px-4' >
                     <p className='text-[14px] ' > {product.name} </p>
                     <p className='font-semibold' > {product.price} {currency} </p>
