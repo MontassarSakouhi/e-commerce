@@ -1,5 +1,5 @@
 import { assets } from '../../assets/assets/assets.js'
-import { NavLink, Link } from 'react-router-dom'
+import { NavLink, Link, useNavigate } from 'react-router-dom'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { toggleSearch } from '../../redux/search/searchSlice.jsx'
@@ -7,16 +7,19 @@ import { Drawer } from 'antd';
 import Cart from '../cart/Cart.jsx'
 import Login from '../login/Login.jsx'
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { toggleDrawer, toggleIsAuth } from '../../redux/auth/authSlice.jsx'
 
 
 const NavBar = () => {
-    const dispatch = useDispatch()
     const { cartCount } = useSelector(state => state.cart)
     const [visible, setVisible] = useState(false)
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(true);
-    const [profileDrawerVisible, setProfileDrawerVisible] = useState(false);
+    const {profileDrawerVisible}=useSelector(state=>state.auth)
     const isSmallDevice = useMediaQuery("only screen and (max-width : 640px)");
+    const {isAuth}=useSelector(state=>state.auth)
+    const navigate=useNavigate()
+    const dispatch=useDispatch()
 
     const showLoading = () => {
         setOpen(true);
@@ -26,6 +29,12 @@ const NavBar = () => {
             setLoading(false);
         }, 1000);
     };
+    const handleLogout=()=>{
+        localStorage.clear()
+        dispatch(toggleIsAuth(false))
+        navigate('/')
+        
+    }
 
     return (
         <div className='flex  item-center justify-between py-5 font-medium border-b-[1px] ' >
@@ -56,14 +65,19 @@ const NavBar = () => {
                         src={assets.profile_icon}
                         alt=""
                         className='w-5 cursor-pointer'
-                        onClick={() => setProfileDrawerVisible(true)}
+                        onClick={() => {
+                            if(isAuth){
+                                return
+                            }
+                            dispatch(toggleDrawer(true))
+
+                        }}
                     />
 
-                    <div className='group-hover:block hidden absolute dropdown-menu pos right-[-50px] pt-4  ' >
+                    <div className={` ${isAuth && 'group-hover:block' } hidden absolute dropdown-menu pos right-[-50px] pt-4 z-[9999]`} >
                         <div className='flex flex-col gap-2 w-32 py-6 px-5 bg-slate-100 text-gray-700 rounded-lg'>
-                            <p className='hover:text-black hover:underline cursor-pointer text-center' >My Profile</p>
-                            <p className='hover:text-black hover:underline cursor-pointer text-center' >Orders</p>
-                            <p className='hover:text-black hover:underline cursor-pointer text-center' >Logout</p>
+                            <p onClick={()=>navigate('/orders')} className='hover:text-black hover:underline cursor-pointer text-center' >Orders</p>
+                            <p onClick={handleLogout} className='hover:text-black hover:underline cursor-pointer text-center' >Logout</p>
                         </div>
                     </div>
                 </div>
@@ -91,11 +105,11 @@ const NavBar = () => {
                     title={<p>Login / Register</p>}
                     open={profileDrawerVisible}
                     styles={{ body: { height: '80%', padding: 0 } }}
-                    onClose={() => setProfileDrawerVisible(false)}
+                    onClose={() => dispatch(toggleDrawer(false))}
                     className='my-2 !p-0 !mr-8 rounded-lg '
                     width={isSmallDevice ? "100%" : "24%"}
                 >
-                    <Login />
+                    <Login  />
                 </Drawer>
 
                 <img onClick={() => setVisible(true)} src={assets.menu_icon} alt="" className='w-5 sm:hidden cursor-pointer' />

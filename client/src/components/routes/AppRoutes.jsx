@@ -28,10 +28,11 @@ const AppRoutes = () => {
             <Route path="/" element={<UserLayout> <Home /></UserLayout>} />
             <Route path="/collection" element={<UserLayout><Collection /></UserLayout>} />
             <Route path="/contact" element={<UserLayout><Contact /></UserLayout>} />
-            <Route path="/orders" element={<UserLayout><Orders /></UserLayout>} />
+            <Route path="/orders" element={<UserLayout><ProtectedRoute><Orders /></ProtectedRoute></UserLayout>} />
             <Route path="/place-order" element={<UserLayout><PlaceOrder /></UserLayout>} />
             <Route path="/product/:productId" element={<UserLayout><Product /></UserLayout>} />
             <Route path="/about" element={<UserLayout><About /></UserLayout>} />
+            <Route path='*' element={<UserLayout> <Home /></UserLayout>} />
         </Routes>
     )
 }

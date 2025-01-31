@@ -5,8 +5,12 @@ import { useSelector } from 'react-redux';
 import { assets } from '../assets/assets/assets';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Axios } from '../services/api';
 
 const PlaceOrder = () => {
+  const navigate = useNavigate()
+  const { totalPrice, shippingFee, cart } = useSelector(state => state.cart)
+
   const initialValues = {
     firstName: '',
     lastName: '',
@@ -29,15 +33,20 @@ const PlaceOrder = () => {
     phone: Yup.string().required('Phone number is required')
   });
 
-  const handleSubmit = (values) => {
+  const handleSubmit = async (values) => {
+    const response = await Axios.post('/cart/add', {values:values,cart:cart})
+
     console.log(values);
+
+
   };
 
   const { currency } = useSelector(state => state.products)
-  const { totalPrice, shippingFee } = useSelector(state => state.cart)
   const [paymentMethod, setPaymentMethod] = useState('cash')
-  const navigate = useNavigate()
-
+  console.log(cart)
+  if (!cart) {
+    navigate('/');
+  }
   return (
     <Formik
       initialValues={initialValues}
@@ -165,7 +174,7 @@ const PlaceOrder = () => {
               </div>
               <div className='flex justify-center' >
                 <button
-                  type="submit"  
+                  type="submit"
                   className="w-[350px] bg-gray-400 active:bg-gray-500 py-2 rounded-full font-semibold text-white align-middle"
                 >
                   PLACE ORDER

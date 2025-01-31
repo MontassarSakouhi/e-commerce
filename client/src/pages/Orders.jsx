@@ -16,7 +16,7 @@ const Orders = () => {
             className="py-6 border-t border-b text-gray-700 flex flex-col md:flex-row md:justify-between gap-6"
           >
             <div className="flex items-start gap-6 text-sm sm:text-base">
-            <img src={el.image[0]} className='w-16' alt="" />
+            <img src={el.images[0]} className='w-16' alt="" />
               <div>
                 <p className="font-medium text-lg">{el.name}</p>
                 <div className="flex items-center gap-3 mt-2 text-base">

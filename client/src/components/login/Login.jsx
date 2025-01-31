@@ -6,6 +6,8 @@ import { useNavigate } from 'react-router-dom'
 import { Spin } from 'antd'
 import { LoadingOutlined } from '@ant-design/icons';
 import { toast } from 'react-toastify';
+import { useDispatch } from 'react-redux'
+import { toggleDrawer, toggleIsAuth } from '../../redux/auth/authSlice'
 
 
 const LoginRegister = () => {
@@ -14,6 +16,7 @@ const LoginRegister = () => {
     const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
+    const dispatch = useDispatch()
 
     const loginFormik = useFormik({
         initialValues: {
@@ -24,20 +27,31 @@ const LoginRegister = () => {
             email: Yup.string().email('Invalid email format').required('Email is required'),
             password: Yup.string().min(6, 'Password should be at least 6 characters').required('Password is required'),
         }),
-        onSubmit: async (values) => {
+        onSubmit: async (values, { resetForm }) => {
             try {
+                setLoading(true)
                 const response = await Axios.post('/user/login', values);
-
                 const { token, user } = response.data;
-                
-
                 localStorage.setItem('token', token);
 
                 if (user.isAdmin) {
                     navigate('/admin/add')
                 }
+                if (!user.isAdmin) {
+                    toast.success('Logged in')
+                    resetForm()
+                    dispatch(toggleDrawer(false))
+                    dispatch(toggleIsAuth(true))
+                    navigate('/')
+                }
+
+
             } catch (error) {
+                setLoading(false)
+
                 console.error("Login failed:", error);
+                setErrors(error.response?.data?.message || 'Something went wrong. Please try again.')
+
             }
         },
     })
@@ -62,8 +76,7 @@ const LoginRegister = () => {
 
                 setIsLogin(true)
                 setLoading(false)
-                toast.success('Registered successfully') 
-                //zeaeaze
+                toast.success('Registered successfully')
                 resetForm({ firstName: '', lastName: '', email: '', password: '' });
 
 
@@ -104,6 +117,7 @@ const LoginRegister = () => {
                     />
                     {loginFormik.touched.password && loginFormik.errors.password && (
                         <div className="text-red-500 text-sm">{loginFormik.errors.password}</div>
+
                     )}
 
                     <div className="flex justify-between text-sm text-gray-600 mt-3">
@@ -115,9 +129,10 @@ const LoginRegister = () => {
                             Create account
                         </span>
                     </div>
+                    {errors && <div className="text-red-500 text-sm mt-2">{errors}</div>}
 
                     <button className="bg-gray-400 text-white rounded-md py-2 mt-5" type="submit">
-                        Sign In
+                        {loading ? <Spin size="small" /> : 'Sign In'}
                     </button>
                 </form>
             ) : (

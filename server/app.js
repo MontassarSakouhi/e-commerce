@@ -19,10 +19,12 @@ app.use(cors());
 const voucherRouter = require('./routes/Voucher.router');
 const userRouter = require('./routes/User.Router');
 const productRouter = require('./routes/Product.router');
+const cartRouter = require('./routes/Cart.router');
 
 app.use('/voucher', voucherRouter);
 app.use('/user', userRouter);
 app.use('/product', productRouter);
+app.use('/cart', cartRouter);
 
 
 
