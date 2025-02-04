@@ -36,7 +36,6 @@ const AdminDashboard = () => {
             return
         }
         navigate(e.key)
-        console.log(e);
 
     };
     return (

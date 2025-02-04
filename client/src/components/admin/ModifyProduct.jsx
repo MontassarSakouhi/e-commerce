@@ -1,34 +1,24 @@
-import { useState, useEffect } from 'react';
-import { LoadingOutlined, PlusOutlined } from '@ant-design/icons';
-import { Image, Upload, Button, Input, Select, Checkbox, Spin } from 'antd';
-import { Formik, Form, Field, ErrorMessage } from 'formik';
+import {useState} from 'react';
+import {LoadingOutlined, PlusOutlined} from '@ant-design/icons';
+import {Button, Checkbox, Image, Input, Select, Spin, Upload} from 'antd';
+import {ErrorMessage, Field, Form, Formik} from 'formik';
 import * as Yup from 'yup';
-import { Axios } from '../../services/api';
-import { toast } from 'react-toastify';
+import {Axios} from '../../services/api';
+import {toast} from 'react-toastify';
 
-const { Option } = Select;
+const {Option} = Select;
 
-const ModifyProduct = ({ _id }) => {
-    const [fileList, setFileList] = useState([]);
+const ModifyProduct = ({product,onClose}) => {
+    const [fileList, setFileList] = useState(product?.images?.map(file => {
+        return {
+            base64: file,
+            thumbUrl: file
+        }
+    }));
     const [previewOpen, setPreviewOpen] = useState(false);
     const [previewImage, setPreviewImage] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-    const [product, setProduct] = useState(null);
 
-    useEffect(() => {
-        const fetchProduct = async () => {
-            try {
-                console.log('Product ID:', _id);
-
-                const { data } = await Axios.post('/product/single', { id: _id });
-                setProduct(data.product);
-                setFileList(data.product.images.map((url, index) => ({ uid: index, url })));
-            } catch (error) {
-                console.error('Error fetching product:', error);
-            }
-        };
-        fetchProduct();
-    }, [_id]);
 
     const getBase64 = (file) =>
         new Promise((resolve, reject) => {
@@ -46,12 +36,12 @@ const ModifyProduct = ({ _id }) => {
         setPreviewOpen(true);
     };
 
-    const handleChange = async ({ fileList: newFileList }, setFieldValue) => {
+    const handleChange = async ({fileList: newFileList}, setFieldValue) => {
         const base64Files = await Promise.all(
             newFileList.map(async (file) => {
                 if (file.originFileObj && !file.base64) {
                     const base64 = await getBase64(file.originFileObj);
-                    return { ...file, base64 };
+                    return {...file, base64};
                 }
                 return file;
             })
@@ -61,9 +51,11 @@ const ModifyProduct = ({ _id }) => {
     };
 
     const uploadButton = (
-        <button className="border-2 border-white text-white bg-transparent py-2 px-4 rounded-lg flex flex-col items-center cursor-pointer" type="button">
-            <PlusOutlined />
-            <div style={{ marginTop: 8 }}>Upload</div>
+        <button
+            className="border-2   bg-transparent py-2 px-4 rounded-lg flex flex-col items-center cursor-pointer"
+            type="button">
+            <PlusOutlined/>
+            <div style={{marginTop: 8}}>Upload</div>
         </button>
     );
 
@@ -79,10 +71,10 @@ const ModifyProduct = ({ _id }) => {
     });
 
     return product ? (
-        <div className='w-[500px]'>
-            <div className="my-3 text-[30px]">Modify Product</div>
-            <Formik
+        <div className='w-[500px] p-6'>
+             <Formik
                 initialValues={{
+                    _id:product._id,
                     name: product.name,
                     description: product.description,
                     price: product.price,
@@ -94,11 +86,13 @@ const ModifyProduct = ({ _id }) => {
                 }}
                 validationSchema={validationSchema}
                 onSubmit={async (values) => {
+                    console.log(values)
                     setIsLoading(true);
-                    const formData = { ...values, images: values.images.map((file) => file.base64 || file.url) };
+                    const formData = {...values, images: values.images.map((file) => file.base64 || file.url)};
                     try {
-                        await Axios.put(`/product/${productId}`, formData);
+                        await Axios.put('/product/update', formData);
                         toast.success('Product updated');
+                        onClose()
                     } catch (error) {
                         console.error('Error updating product:', error);
                     } finally {
@@ -106,28 +100,36 @@ const ModifyProduct = ({ _id }) => {
                     }
                 }}
             >
-                {({ setFieldValue, handleSubmit, values }) => (
+                {({setFieldValue, handleSubmit, values}) => (
                     <Form onSubmit={handleSubmit} className="space-y-4">
-                        <Field name="name" as={Input} placeholder="Product Name" className="w-full p-2 border rounded-lg" />
-                        <ErrorMessage name="name" component="div" className="text-red-500" />
-                        <Field name="description" as={Input.TextArea} placeholder="Description" className="w-full p-2 rounded-lg" />
-                        <ErrorMessage name="description" component="div" className="text-red-500" />
-                        <Field name="price" type="number" as={Input} placeholder="Price" className="w-full p-2 rounded-lg" />
-                        <ErrorMessage name="price" component="div" className="text-red-500" />
-                        <Upload listType="picture-circle" fileList={fileList} onChange={(info) => handleChange(info, setFieldValue)} onPreview={handlePreview} beforeUpload={() => false}>
+                        <Field name="name" as={Input} placeholder="Product Name"
+                               className="w-full p-2 border rounded-lg"/>
+                        <ErrorMessage name="name" component="div" className="text-red-500"/>
+                        <Field name="description" as={Input.TextArea} rows={8} placeholder="Description"
+                               className="w-full p-2 rounded-lg"/>
+                        <ErrorMessage name="description" component="div" className="text-red-500"/>
+                        <Field name="price" type="number" as={Input} placeholder="Price"
+                               className="w-full p-2 rounded-lg"/>
+                        <ErrorMessage name="price" component="div" className="text-red-500"/>
+                        <Upload listType="picture-circle" fileList={fileList}
+                                onChange={(info) => handleChange(info, setFieldValue)} onPreview={handlePreview}
+                                beforeUpload={() => false}>
                             {fileList.length >= 8 ? null : uploadButton}
+
                         </Upload>
-                        <ErrorMessage name="images" component="div" className="text-red-500" />
-                        <Checkbox checked={values.bestseller} onChange={(e) => setFieldValue('bestseller', e.target.checked)}>Bestseller</Checkbox>
+                        <ErrorMessage name="images" component="div" className="text-red-500"/>
+                        <Checkbox checked={values.bestseller}
+                                  onChange={(e) => setFieldValue('bestseller', e.target.checked)}>Bestseller</Checkbox>
                         <Button disabled={isLoading} htmlType="submit" className="w-[150px] bg-gray-100">
-                            {isLoading ? <Spin indicator={<LoadingOutlined spin />} size="medium" /> : 'Update'}
+                            {isLoading ? <Spin indicator={<LoadingOutlined spin/>} size="medium"/> : 'Update'}
                         </Button>
                     </Form>
                 )}
             </Formik>
-            {previewImage && <Image wrapperStyle={{ display: 'none' }} preview={{ visible: previewOpen, onVisibleChange: setPreviewOpen }} src={previewImage} />}
+            {previewImage &&
+                <Image preview={{visible: previewOpen, onVisibleChange: setPreviewOpen}} src={previewImage}/>}
         </div>
-    ) : <Spin size="large" />;
+    ) : <Spin size="large"/>;
 };
 
-export default ModifyProduct;
+export default ModifyProduct;

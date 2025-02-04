@@ -3,7 +3,7 @@ const Product = require('../models/product.model');
 const addProduct = async (req, res) => {
     try {
         const { name, description, price, images, category, subCategory, sizes, bestseller } = req.body;
-     
+
         const newProduct = new Product({
             name,
             description,
@@ -14,7 +14,7 @@ const addProduct = async (req, res) => {
             sizes,
             bestseller,
         });
-        
+
 
         await newProduct.save();
         res.status(201).send({ message: 'Product added successfully', product: newProduct });
@@ -65,4 +65,27 @@ const removeProduct = async (req, res) => {
     }
 };
 
-module.exports = { addProduct, listProducts, removeProduct, singleProduct };
+const updateProduct = async (req, res) => {
+    try {
+        const { _id, name, description, price, images, category, subCategory, sizes, bestseller } = req.body;
+        const updatedProduct = await Product.findByIdAndUpdate(_id, {
+            name: name,
+            description: description,
+            price: price,
+            images: images,
+            category: category,
+            subCategory: subCategory,
+            sizes: sizes,
+            bestseller: bestseller
+        },{ new: true })
+        console.log(updatedProduct)
+        res.status(200).send({ message: 'Product updated successfully' });
+
+    } catch (error) {
+        res.status(500).send({ message: 'Failed to update product', error: error.message });
+
+    }
+
+}
+
+module.exports = { addProduct, listProducts, removeProduct, singleProduct, updateProduct };

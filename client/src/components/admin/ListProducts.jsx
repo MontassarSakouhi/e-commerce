@@ -1,10 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Table, Input, Button, Space, notification, Modal } from 'antd';
-import { SearchOutlined } from '@ant-design/icons';
-import { useDispatch, useSelector } from 'react-redux';
-import { setProducts } from '../../redux/Products/productsSlice';
-import { Axios } from '../../services/api';
-import { Trash2, Edit } from 'lucide-react';
+import React, {useEffect, useState} from 'react';
+import {Button, Input, Modal, notification, Space, Table} from 'antd';
+import {useDispatch, useSelector} from 'react-redux';
+import {setProducts} from '../../redux/Products/productsSlice';
+import {Axios} from '../../services/api';
+import {Edit, Trash2} from 'lucide-react';
 import ModifyProduct from './ModifyProduct';
 
 const ListProducts = () => {
@@ -14,20 +13,27 @@ const ListProducts = () => {
   const [filteredData, setFilteredData] = useState(products);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
+
 
   useEffect(() => {
-    const fetchData = async () => {
+    (async () => {
       try {
+        setIsLoading(true)
         const response = await Axios.get('/product/list');
         dispatch(setProducts(response.data.products));
         setFilteredData(response.data.products);
+        setIsLoading(false)
+
       } catch (error) {
+        setIsLoading(false)
+
         console.error('Error fetching products:', error);
       }
-    };
+    })()
 
-    fetchData();
-  }, [dispatch]);
+
+  }, []);
 
   const handleSearch = (value) => {
     setSearchText(value);
@@ -131,11 +137,11 @@ const ListProducts = () => {
         onChange={(e) => handleSearch(e.target.value)}
         style={{ marginBottom: 20 }}
       />
-      <Table columns={columns} dataSource={filteredData} rowKey="_id" />
+      <Table columns={columns} dataSource={filteredData} rowKey="_id"  loading={isLoading}/>
 
-      <Modal open={isModalOpen} onCancel={handleModalClose} footer={null} title="Modify Product">
+      <Modal open={isModalOpen} onCancel={handleModalClose} footer={null} title="Modify Product" width={600}>
         {selectedProduct ? (
-          <ModifyProduct product={selectedProduct} onClose={handleModalClose} />
+          <ModifyProduct  product={selectedProduct} onClose={handleModalClose} />
         ) : (
           <p>Loading product details...</p>
         )}
@@ -144,4 +150,4 @@ const ListProducts = () => {
   );
 };
 
-export default ListProducts;
+export default ListProducts;

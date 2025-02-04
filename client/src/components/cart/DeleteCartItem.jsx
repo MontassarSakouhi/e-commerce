@@ -1,14 +1,17 @@
 import { Trash2 } from 'lucide-react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { deleteFromCart } from '../../redux/cart/cartSlice';
 import { message } from 'antd';
 
 const DeleteCartItem = ({ _id, size }) => {
     const dispatch = useDispatch();
-
+    const {cart}=useSelector(state=>state.cart)
     const handleDelete = () => {
         dispatch(deleteFromCart({ _id, size }));
+        console.log(cart)
         message.success('Item deleted successfully');
+        console.log(cart)
+
     };
 
     return (

@@ -3,14 +3,12 @@ const usersModel = require('../models/users.model');
 
 const isAdmin = async (req, res, next) => {
     const token = req.header('Authorization') && req.header('Authorization').split(' ')[1];
-    console.log(token)
     if (!token) {
         console.log('No token provided');
         return res.status(401).json({ message: 'Access denied. No token provided.' });
     }
 
     try {
-        console.log(1);
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         req.user = decoded;
         console.log('Decoded token:', decoded);

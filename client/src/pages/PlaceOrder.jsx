@@ -3,13 +3,21 @@ import * as Yup from 'yup';
 import Title from '../components/title/Title';
 import { useSelector } from 'react-redux';
 import { assets } from '../assets/assets/assets';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Axios } from '../services/api';
+import { Spin } from 'antd';
 
 const PlaceOrder = () => {
   const navigate = useNavigate()
   const { totalPrice, shippingFee, cart } = useSelector(state => state.cart)
+  const [loading, setLoading] = useState(false)
+
+  useEffect(() => {
+    if (totalPrice===0) {
+      navigate('/')
+    }
+  }, [totalPrice])
 
   const initialValues = {
     firstName: '',
@@ -34,19 +42,24 @@ const PlaceOrder = () => {
   });
 
   const handleSubmit = async (values) => {
-    const response = await Axios.post('/cart/add', {values:values,cart:cart})
+    try {
+      setLoading(true)
+      const response = await Axios.post('/order/add', { values: values, cart: cart })
+      navigate('/orders')
+      console.log(values, cart);
 
-    console.log(values);
+      setLoading(false)
+    } catch (error) {
+      setLoading(false)
+
+    }
 
 
   };
 
   const { currency } = useSelector(state => state.products)
   const [paymentMethod, setPaymentMethod] = useState('cash')
-  console.log(cart)
-  if (!cart) {
-    navigate('/');
-  }
+
   return (
     <Formik
       initialValues={initialValues}
@@ -176,8 +189,9 @@ const PlaceOrder = () => {
                 <button
                   type="submit"
                   className="w-[350px] bg-gray-400 active:bg-gray-500 py-2 rounded-full font-semibold text-white align-middle"
+                  disabled={loading}
                 >
-                  PLACE ORDER
+                  {loading ? <Spin /> : 'PLACE ORDER'}
                 </button>
 
               </div>
